@@ -37,7 +37,7 @@ authCode=$(echo "$authCode" | tr -d '"')
 encoded=$(urlencode "$to_path")
 fileLength=$(wc -c < $file_name)
 if [[ "$codeRes" -eq 200 ]] ; then
-    echo "登录成功"
+    echo "Logged in,and uploading..."
      uploadRes=$(curl --location --request PUT "$alist_url/api/fs/put" \
         --header "Authorization: $authCode" \
         --header "Content-Length: $fileLength" \
@@ -48,10 +48,12 @@ if [[ "$codeRes" -eq 200 ]] ; then
         --data-binary "@$file_name" )
     codeRes=$(echo "$uploadRes"|jq '.code')
         if [[ "$codeRes" -eq 200 ]] ; then
-            echo "上传成功"
+            echo "Upload completed"
          else
-        echo "上传失败"
+        echo "Upload failed"
+        echo "$uploadRes"
         fi
 else
-    echo "登录失败"
+    echo "Login failed"
+    echo "$responseCode"
 fi
