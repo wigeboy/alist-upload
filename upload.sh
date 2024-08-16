@@ -24,7 +24,6 @@ urlencode() {
 
 
 password="$(echo -n "$password-https://github.com/alist-org/alist" | sha256sum | awk '{print $1}')"
-# 获取token
 responseCode=$(curl --location --request POST "$alist_url/api/auth/login/hash" \
 --header 'User-Agent: Apifox/1.0.0 (https://apifox.com)' \
 --header 'Content-Type: application/json' \
@@ -32,15 +31,11 @@ responseCode=$(curl --location --request POST "$alist_url/api/auth/login/hash" \
     "username": "'$user_name'",
     "password": "'$password'"
     }')
-#echo $responseCode
 codeRes=$(echo "$responseCode"|jq '.code')
 authCode=$(echo "$responseCode"|jq '.data.token')
 authCode=$(echo "$authCode" | tr -d '"')
 encoded=$(urlencode "$to_path")
-#echo "------------------------------"
-#echo $authCode
 fileLength=$(wc -c < $file_name)
-# 判断是否登录成功
 if [[ "$codeRes" -eq 200 ]] ; then
     echo "登录成功"
      uploadRes=$(curl --location --request PUT "$alist_url/api/fs/put" \
