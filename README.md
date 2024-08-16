@@ -5,6 +5,7 @@ A shell script to upload files to your Alist drive.
 
  ```
  ./alist-upload.sh <file> <remote path> <alist url> <alist username> <alist password>
+```
 
  Example
 
