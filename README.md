@@ -1,5 +1,5 @@
 # alist-upload
-A shell script to upload files to your Alist drive.
+A shell script to upload files to your Alist driver.
 
  Usage
 
